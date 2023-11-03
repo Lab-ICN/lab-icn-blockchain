@@ -1,0 +1,52 @@
+{
+  "nonce": "0x0",
+  "timestamp": "0x58ee40ba",
+  "extraData": "0xf84fa00000000000000000000000000000000000000000000000000000000000000000ea945157b216fa962acb4c881415d893823077f72f6194ba48aa764fab2fe40bd91e83c48ee650990491d2c080c0",
+  "gasLimit": "0xffff",
+  "gasUsed": "0x0",
+  "number": "0x0",
+  "difficulty": "0x1",
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "mixHash": "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "config": {
+    "chainId": 8989,
+    "homesteadBlock": 0,
+    "eip150Block": 0,
+    "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "eip155Block": 0,
+    "eip158Block": 0,
+    "byzantiumBlock": 0,
+    "constantinopleBlock": 0,
+    "petersburgBlock": 0,
+    "istanbulBlock": 0,
+    "muirglacierblock": 0,
+    "berlinBlock": 0,
+    "londonBlock": 0,
+    "isQuorum": true,
+    "maxCodeSizeConfig": [
+      {
+        "block": 0,
+        "size": 64
+      }
+    ],
+    "txnSizeLimit": 64,
+    "qbft": {
+      "policy": 0,
+      "epoch": 30000,
+      "ceil2Nby3Block": 0,
+      "testQBFTBlock": 0,
+      "blockperiodseconds": 5,
+      "emptyblockperiodseconds": 60,
+      "requesttimeoutseconds": 10
+    }
+  },
+  "alloc": {
+    "0xb1b90e3cbc0b9b09168bfc2430f1b0886096a58f": {
+      "balance": "1000000000000000000000000000"
+    },
+    "0xde519b56d1d210b9e79bcade05a9b4919204a0ea": {
+      "balance": "1000000000000000000000000000"
+    }
+  }
+}
