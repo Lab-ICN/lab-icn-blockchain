@@ -1,0 +1,29 @@
+services:
+  node_bootnode0:
+    image: quorumengineering/quorum
+    ports:
+      - "30303:30303/tcp"
+      - "8545:8545"
+      - "8546:8546"
+      - "53000:53000"
+      - "30301:30301/udp"
+    volumes:
+      - "./datadir:/datadir"
+    entrypoint: [ "sh", "-c" ]
+    command:
+      [
+        "geth --datadir /datadir --networkid 8989 --syncmode full --mine --miner.gasprice 0 --emitcheckpoints --http --http.addr 0.0.0.0 --http.port 8545 --http.corsdomain https://remix.ethereum.org --rpcapi admin,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft"
+      ]
+  # validator:
+  #   image: quorumengineering/quorum
+  #   ports:
+  #     - "30303:30303"
+  #     - "8545:8545"
+  #     - "8546:8546"
+  #     - "53000:53000"
+  #   volumes:
+  #     - "./validator1:/datadir"
+  #   entrypoint:
+  #     - sh
+  #     - -c
+  #     - "geth --datadir /datadir --http --http.addr 0.0.0.0 --http.port 8545 --rpcapi admin,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft"

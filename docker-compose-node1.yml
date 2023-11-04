@@ -1,0 +1,59 @@
+services:
+  node_validator1:
+    image: quorumengineering/quorum
+    restart: unless-stopped
+    ports:
+      - "30303:30303/tcp"
+      - "8545:8545"
+      - "8546:8546"
+      - "53000:53000"
+      - "30301:30301/udp"
+    volumes:
+      - "./datadir:/datadir"
+      - "./tessera/tessera1.ipc:/tessera.ipc"
+    entrypoint: [ "sh", "-c" ]
+    environment:
+      - PRIVATE_CONFIG=/tessera.ipc
+    command:
+      [
+        "geth --datadir /datadir --networkid 8989 --syncmode full --mine --miner.gasprice 0 --emitcheckpoints --http --http.addr 0.0.0.0 --http.port 8545 --http.corsdomain https://remix.ethereum.org --rpcapi admin,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft"
+      ]
+    networks:
+      quorum:
+    depends_on:
+      tessera:
+        condition: service_healthy
+
+  tessera:
+    image: quorumengineering/tessera
+    restart: unless-stopped
+    volumes:
+      - './tessera:/tesseraconf'
+      - './datadir/geth.ipc:/geth.ipc:ro'
+    command:
+      - --debug
+      - -configfile
+      - /tesseraconf/config.json
+    networks:
+      quorum:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9081/upcheck"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+networks:
+  quorum:
+  # validator:
+  #   image: quorumengineering/quorum
+  #   ports:
+  #     - "30303:30303"
+  #     - "8545:8545"
+  #     - "8546:8546"
+  #     - "53000:53000"
+  #   volumes:
+  #     - "./validator1:/datadir"
+  #   entrypoint:
+  #     - sh
+  #     - -c
+  #     - "geth --datadir /datadir --http --http.addr 0.0.0.0 --http.port 8545 --rpcapi admin,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft"

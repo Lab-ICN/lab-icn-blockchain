@@ -1,5 +1,5 @@
 services:
-  node_3:
+  node_validator0:
     image: quorumengineering/quorum
     restart: unless-stopped
     ports:
@@ -31,7 +31,7 @@ services:
       restart: unless-stopped
       volumes:
         - './tessera:/tesseraconf'
-        #- './datadir/geth.ipc:/geth.ipc'
+        - './datadir/geth.ipc:/geth.ipc'
       command:
         - --debug
         - -configfile

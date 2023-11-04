@@ -1,8 +1,8 @@
 {
   "nonce": "0x0",
   "timestamp": "0x58ee40ba",
-  "extraData": "0xf84fa00000000000000000000000000000000000000000000000000000000000000000ea945157b216fa962acb4c881415d893823077f72f6194ba48aa764fab2fe40bd91e83c48ee650990491d2c080c0",
-  "gasLimit": "0xffff",
+  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000f843f83f94c1f15be820f4d5fd603cbb05b5aae063ddad896994b6058a9079355794b6ee913ca157fe0a1b9183a5947c7454a832b857dbe3a8886dc0e4334990463f8280c0",
+  "gasLimit": "0xFFFFFF",
   "gasUsed": "0x0",
   "number": "0x0",
   "difficulty": "0x1",
@@ -31,21 +31,25 @@
       }
     ],
     "txnSizeLimit": 64,
-    "qbft": {
+    "ibft": {
       "policy": 0,
       "epoch": 30000,
       "ceil2Nby3Block": 0,
-      "testQBFTBlock": 0,
       "blockperiodseconds": 5,
-      "emptyblockperiodseconds": 60,
       "requesttimeoutseconds": 10
     }
   },
   "alloc": {
-    "0xb1b90e3cbc0b9b09168bfc2430f1b0886096a58f": {
+    "0x90fb016b14f840c1159fe8555932e1df9a159018": {
       "balance": "1000000000000000000000000000"
     },
-    "0xde519b56d1d210b9e79bcade05a9b4919204a0ea": {
+    "0xcedd5f45026de1911cf05d76af2200aa03b672df": {
+      "balance": "1000000000000000000000000000"
+    },
+    "0x2b385f37995e54cfafd009e80d6a74dc699b063f": {
+      "balance": "1000000000000000000000000000"
+    },
+    "0xa43a5289704a2599b3fd0f3bf15cfb173cf5806e": {
       "balance": "1000000000000000000000000000"
     }
   }
