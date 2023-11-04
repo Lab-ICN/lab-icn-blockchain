@@ -17,7 +17,7 @@
     },
     {
       "app": "P2P",
-      "serverAddress": "http://localhost:9003",
+      "serverAddress": "http://localhost:9000",
       "sslConfig": {
           "tls": "OFF"
       },
@@ -26,7 +26,16 @@
   ],
   "peer": [
     {
-      "url": "http://localhost:9001"
+      "url": "http://10.34.4.171:9000"
+    },
+    {
+      "url": "http://10.34.4.172:9000"
+    },
+    {
+      "url": "http://10.34.4.173:9000"
+    },
+    {
+      "url": "http://10.34.4.174:9000"
     }
   ],
   "keys": {
