@@ -51,10 +51,11 @@ func main() {
 func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactOpts) {
 	r := gin.Default()
 
-	r.GET("/add-patient", func(c *gin.Context) {
+	r.POST("/add-patient", func(c *gin.Context) {
+		address := c.PostForm("address")
 		name := c.PostForm("name")
 
-		tx, err := medicRecordContract.AddPatient(transactor, common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), name)
+		tx, err := medicRecordContract.AddPatient(transactor, common.HexToAddress(address), name)
 		if err != nil {
 			log.Fatal(err.Error())
 		} else {
@@ -81,6 +82,7 @@ func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactO
 	})
 
 	r.POST("/add-record", func(c *gin.Context) {
+		address := c.PostForm("address")
 		temperatureUint, err := strconv.ParseUint(c.PostForm("temperature"), 10, 8)
 		if err != nil {
 			log.Fatal(err)
@@ -100,7 +102,7 @@ func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactO
 		sistol := uint8(sistolUint)
 		diastol := uint8(diastolUint)
 
-		tx, err := medicRecordContract.AddRecord(transactor, "Record-01", common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), transactor.From, temperature, sistol, diastol)
+		tx, err := medicRecordContract.AddRecord(transactor, "Record-01", common.HexToAddress(address), transactor.From, temperature, sistol, diastol)
 		if err != nil {
 			log.Fatal(err.Error())
 		} else {
