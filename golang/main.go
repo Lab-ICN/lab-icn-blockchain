@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"math/big"
 
 	medic "github.com/Lab-ICN/lab-icn-blockchain/contracts"
@@ -30,8 +31,13 @@ func main() {
 	} else {
 		fmt.Println("Initalization ETH Client Successful")
 	}
+
 	transactor, err := bind.NewKeyedTransactorWithChainID(wallet.PrivateKey, big.NewInt(8989))
 	transactor.GasLimit = 3000000
+	caller := &bind.CallOpts{
+		From:    transactor.From,
+		Context: context.Background(),
+	}
 
 	if err != nil {
 		panic(err.Error())
@@ -45,10 +51,10 @@ func main() {
 		fmt.Println("Initalization Smart Contract Successful")
 	}
 
-	handleRequests(medicRecordContract, transactor)
+	handleRequests(medicRecordContract, transactor, caller)
 }
 
-func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactOpts) {
+func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactOpts, caller *bind.CallOpts) {
 	r := gin.Default()
 
 	r.POST("/add-patient", func(c *gin.Context) {
@@ -77,7 +83,7 @@ func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactO
 			fmt.Println("TxHash:", tx.Hash().Hex())
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"message": fmt.Sprint("Patient  has been added, txHash:", tx.Hash().Hex()),
+			"message": fmt.Sprint("Doctor  has been added, txHash:", tx.Hash().Hex()),
 		})
 	})
 
@@ -102,7 +108,7 @@ func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactO
 		sistol := uint8(sistolUint)
 		diastol := uint8(diastolUint)
 
-		tx, err := medicRecordContract.AddRecord(transactor, "Record-01", common.HexToAddress(address), transactor.From, temperature, sistol, diastol)
+		tx, err := medicRecordContract.AddRecord(transactor, "Record-02", common.HexToAddress(address), transactor.From, temperature, sistol, diastol)
 		if err != nil {
 			log.Fatal(err.Error())
 		} else {
@@ -111,6 +117,52 @@ func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactO
 		c.JSON(http.StatusOK, gin.H{
 			"message": fmt.Sprint("Record has been added, txHash:", tx.Hash().Hex()),
 		})
+	})
+
+	// still status 500
+	r.GET("/get-sender-role", func(c *gin.Context) {
+		// fmt.Println(caller.From)
+		// role, err := medicRecordContract.GetSenderRole(caller)
+		role, err := medicRecordContract.GetSenderRole(caller)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"sender-role": role,
+			})
+		}
+	})
+
+	r.POST("/add-insurance", func(c *gin.Context) {
+		address := c.PostForm("address")
+		namaInsurance := c.PostForm("insuranceName")
+
+		tx, err := medicRecordContract.AddInsurance(transactor, common.HexToAddress(address), namaInsurance)
+		if err != nil {
+			log.Fatal(err.Error())
+		} else {
+			fmt.Println("TxHash:", tx.Hash().Hex())
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"message": fmt.Sprint("Insurance ", namaInsurance, " has been added, txHash: ", tx.Hash().Hex()),
+		})
+	})
+
+	r.POST("/get-records", func(c *gin.Context) {
+		patientId := c.PostForm("patientId")
+		records, err := medicRecordContract.GetRecords(caller, common.HexToAddress(patientId))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+		} else {
+
+			c.JSON(http.StatusOK, gin.H{
+				"records": records,
+			})
+		}
 	})
 	r.Run()
 }
