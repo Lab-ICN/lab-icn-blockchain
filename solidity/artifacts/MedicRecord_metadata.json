@@ -1,0 +1,545 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "doctorId",
+						"type": "address"
+					}
+				],
+				"name": "DoctorAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "hospitaId",
+						"type": "address"
+					}
+				],
+				"name": "HospitalAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "patientId",
+						"type": "address"
+					}
+				],
+				"name": "InsuranceAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "patientId",
+						"type": "address"
+					}
+				],
+				"name": "PatientAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "cid",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "patientId",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "doctorId",
+						"type": "address"
+					}
+				],
+				"name": "RecordAdded",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_nama",
+						"type": "string"
+					}
+				],
+				"name": "addDoctor",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_hospitalId",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_namaRs",
+						"type": "string"
+					}
+				],
+				"name": "addHospital",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_insuranceId",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_namaInsurance",
+						"type": "string"
+					}
+				],
+				"name": "addInsurance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_patientId",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_nama",
+						"type": "string"
+					}
+				],
+				"name": "addPatient",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_cid",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "_patientId",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_doctorId",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "temperature",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "diastol",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "sistol",
+						"type": "uint8"
+					}
+				],
+				"name": "addRecord",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "doctors",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "id",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "nama",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_patientId",
+						"type": "address"
+					}
+				],
+				"name": "getPatientData",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "id",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "noKtp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "nama",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "alamat",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "jenisKelamin",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "golonganDarah",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "nomorTelepon",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "noBpjs",
+								"type": "uint256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "string",
+										"name": "cid",
+										"type": "string"
+									},
+									{
+										"internalType": "address",
+										"name": "patientId",
+										"type": "address"
+									},
+									{
+										"internalType": "address",
+										"name": "doctorId",
+										"type": "address"
+									},
+									{
+										"internalType": "uint8",
+										"name": "temperature",
+										"type": "uint8"
+									},
+									{
+										"internalType": "uint8",
+										"name": "sistol",
+										"type": "uint8"
+									},
+									{
+										"internalType": "uint8",
+										"name": "diastol",
+										"type": "uint8"
+									},
+									{
+										"internalType": "uint256",
+										"name": "timeAdded",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct MedicRecord.Record[]",
+								"name": "records",
+								"type": "tuple[]"
+							}
+						],
+						"internalType": "struct MedicRecord.Patient",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_patientId",
+						"type": "address"
+					}
+				],
+				"name": "getPatientExists",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_patientId",
+						"type": "address"
+					}
+				],
+				"name": "getRecords",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "cid",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "patientId",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "doctorId",
+								"type": "address"
+							},
+							{
+								"internalType": "uint8",
+								"name": "temperature",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint8",
+								"name": "sistol",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint8",
+								"name": "diastol",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timeAdded",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct MedicRecord.Record[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSenderRole",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "hospitals",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "id",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "nama",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "insurances",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "id",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "nama",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "patients",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "id",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "noKtp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "nama",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "alamat",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "jenisKelamin",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "golonganDarah",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nomorTelepon",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "noBpjs",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"solidity/MedicRecord.sol": "MedicRecord"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"solidity/MedicRecord.sol": {
+			"keccak256": "0xfe8138011a33b409ca8a775bd055c7a600bd8f7785d7533e2855be85e481b5e0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e239d3b3172d16eced252e5424ae4304a816ddfdb71bc576596e83d0dcdbf7e2",
+				"dweb:/ipfs/QmVQK9ikWY9CaA36VJcNiyq5963APidG7jstnJQEHgv49E"
+			]
+		}
+	},
+	"version": 1
+}

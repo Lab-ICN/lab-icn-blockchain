@@ -18,6 +18,9 @@ contract MedicRecord {
     string cid;
     address patientId;
     address doctorId;
+    uint8 temperature;
+    uint8 sistol;
+    uint8 diastol;
     uint256 timeAdded;
   }
 
@@ -82,7 +85,7 @@ contract MedicRecord {
     emit HospitalAdded(_hospitalId);
   }
   
-  function addInsurance(address _insuranceId, string memory _namaInsurance) public senderIsDoctor {
+  function addInsurance(address _insuranceId, string memory _namaInsurance) public {
     require(insurances[_insuranceId].id != _insuranceId, "This insurance already exists.");
     insurances[_insuranceId].id = _insuranceId;
     insurances[_insuranceId].nama = _namaInsurance;
@@ -98,25 +101,16 @@ contract MedicRecord {
     emit DoctorAdded(msg.sender);
   }
 
-  function addRecord(string memory _cid, address _patientId) public senderIsDoctor patientExists(_patientId) {
-    Record memory record = Record(_cid, _patientId, msg.sender, block.timestamp);
+  function addRecord(string memory _cid, address _patientId, address _doctorId, uint8 temperature, uint8 diastol, uint8 sistol) public senderIsDoctor patientExists(_patientId) {
+    Record memory record = Record(_cid, _patientId, _doctorId, temperature,sistol, diastol,block.timestamp);
     patients[_patientId].records.push(record);
 
-    emit RecordAdded(_cid, _patientId, msg.sender);
+    emit RecordAdded(_cid, _patientId,_doctorId);
   } 
 
   function getRecords(address _patientId) public view senderExists patientExists(_patientId) returns (Record[] memory) {
     return patients[_patientId].records;
   } 
-
-  // function getPatients() public view senderExists returns (Patient[] memory) {
-  //   Patient[] memory ret = new Patient[]();
-  //   for (uint i = 0; i < addressRegistryCount; i++) {
-  //       ret[i] = addresses[i];
-  //   }
-  //   return ret;
-  //   return patients;
-  // } 
 
   function getSenderRole() public view returns (string memory) {
     if (doctors[msg.sender].id == msg.sender) {

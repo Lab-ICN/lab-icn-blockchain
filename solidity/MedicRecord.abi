@@ -154,6 +154,26 @@
 				"internalType": "address",
 				"name": "_patientId",
 				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_doctorId",
+				"type": "address"
+			},
+			{
+				"internalType": "uint8",
+				"name": "temperature",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint8",
+				"name": "diastol",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint8",
+				"name": "sistol",
+				"type": "uint8"
 			}
 		],
 		"name": "addRecord",
@@ -255,6 +275,21 @@
 								"type": "address"
 							},
 							{
+								"internalType": "uint8",
+								"name": "temperature",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint8",
+								"name": "sistol",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint8",
+								"name": "diastol",
+								"type": "uint8"
+							},
+							{
 								"internalType": "uint256",
 								"name": "timeAdded",
 								"type": "uint256"
@@ -318,6 +353,21 @@
 						"internalType": "address",
 						"name": "doctorId",
 						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "temperature",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "sistol",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "diastol",
+						"type": "uint8"
 					},
 					{
 						"internalType": "uint256",
