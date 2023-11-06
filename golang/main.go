@@ -8,6 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	gin "github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 
 	"fmt"
 	"log"
@@ -16,31 +17,33 @@ import (
 )
 
 func main() {
+	godotenv.Load(".env")
 	wallet, err := medic.NewWallet()
 	if err != nil {
 		panic(err.Error())
 	} else {
 		fmt.Println("Initalization Wallet Successful")
 	}
-	client, err := ethclient.Dial("http://10.34.4.172:8545")
+	client, err := ethclient.Dial("http://10.34.4.171:8545")
 	if err != nil {
 		panic(err.Error())
 	} else {
 		fmt.Println("Initalization ETH Client Successful")
 	}
 	transactor, err := bind.NewKeyedTransactorWithChainID(wallet.PrivateKey, big.NewInt(8989))
+	transactor.GasLimit = 3000000
+
 	if err != nil {
 		panic(err.Error())
 	} else {
 		fmt.Println("Initalization Transactor Successful")
 	}
-	medicRecordContract, err := medic.NewMedic(common.HexToAddress("0xf2140d33eb893bbb03395dffa4b67ef24924b708"), client)
+	medicRecordContract, err := medic.NewMedic(common.HexToAddress("0x8c57BbFa3e5F3783BFf46A815BCF5Ccb31A1be99"), client)
 	if err != nil {
 		panic(err.Error())
 	} else {
 		fmt.Println("Initalization Smart Contract Successful")
 	}
-	medicRecordContract.AddPatient(transactor, common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), "Ananda Fitra")
 
 	handleRequests(medicRecordContract, transactor)
 }
@@ -51,22 +54,33 @@ func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactO
 	r.GET("/add-patient", func(c *gin.Context) {
 		name := c.PostForm("name")
 
-		medicRecordContract.AddPatient(transactor, common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), name)
+		tx, err := medicRecordContract.AddPatient(transactor, common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), name)
+		if err != nil {
+			log.Fatal(err.Error())
+		} else {
+			fmt.Println("TxHash:", tx.Hash().Hex())
+		}
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Patient  has been added",
+			"message": fmt.Sprint("Patient  has been added, txHash:", tx.Hash().Hex()),
 		})
 	})
 
-	r.GET("/add-doctor", func(c *gin.Context) {
+	r.POST("/add-doctor", func(c *gin.Context) {
 		name := c.PostForm("name")
+		fmt.Println(name)
 
-		medicRecordContract.AddPatient(transactor, common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), name)
+		tx, err := medicRecordContract.AddDoctor(transactor, name)
+		if err != nil {
+			log.Fatal(err.Error())
+		} else {
+			fmt.Println("TxHash:", tx.Hash().Hex())
+		}
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Patient  has been added",
+			"message": fmt.Sprint("Patient  has been added, txHash:", tx.Hash().Hex()),
 		})
 	})
 
-	r.GET("/add-record", func(c *gin.Context) {
+	r.POST("/add-record", func(c *gin.Context) {
 		temperatureUint, err := strconv.ParseUint(c.PostForm("temperature"), 10, 8)
 		if err != nil {
 			log.Fatal(err)
@@ -80,13 +94,20 @@ func handleRequests(medicRecordContract *medic.Medic, transactor *bind.TransactO
 			log.Fatal(err)
 		}
 
+		fmt.Println(temperatureUint, sistolUint, diastolUint)
+
 		temperature := uint8(temperatureUint)
 		sistol := uint8(sistolUint)
 		diastol := uint8(diastolUint)
 
-		medicRecordContract.AddRecord(transactor, "Record-01", common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), temperature, sistol, diastol)
+		tx, err := medicRecordContract.AddRecord(transactor, "Record-01", common.HexToAddress("0x9ceFB7f35f6EF5E9b0021B13b6dd15e3b19d5CB8"), transactor.From, temperature, sistol, diastol)
+		if err != nil {
+			log.Fatal(err.Error())
+		} else {
+			fmt.Println("TxHash:", tx.Hash().Hex())
+		}
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Record has been added",
+			"message": fmt.Sprint("Record has been added, txHash:", tx.Hash().Hex()),
 		})
 	})
 	r.Run()
